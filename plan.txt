@@ -1,0 +1,15 @@
+choose random pixel on image
+get pixels adjoining that pixel that are within the chosen threshold of the first one
+do this until all pixels are taken
+then color each section with average color
+    maybe also have black outlines between sections which are thicker if the colors are more different
+
+how does threshold work, how is it determined?
+def difference(pixel1, pixel2):
+    diff = 0
+    for i in range(3):
+        diff += (pixel1[i] - pixel2[i])**2
+    return diff
+I'll try that for now
+
+after that, go through every pixel in the resulting image.  If there is another pixel around that one that is a different color than this one, draw a black circle there.  The radius of the circle is proportional to the difference in color
