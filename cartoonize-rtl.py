@@ -37,13 +37,13 @@ def average_color(image, pixel_group):
     return (int(r), int(g), int(b))
 
 def main(THRESHOLD):
-    fname = 'left-to-right/'+("%06d" % (THRESHOLD,))+'.jpg'
+    fname = 'right-to-left/'+("%06d" % (THRESHOLD,))+'.jpg'
 
     im = Image.open('pic.jpg')
     im2 = Image.new("RGB", (im.width, im.height), "white")
     draw = ImageDraw.Draw(im2)
     pixels_to_fill = []
-    for i in range(im.width):
+    for i in range(im.width)[::-1]:
         for j in range(im.height):
             pixels_to_fill.append((i,j))
     pixel_groups = []
@@ -76,6 +76,6 @@ def main(THRESHOLD):
 
 if __name__ == '__main__':
     t = 442
-    for i in range(10):
+    for i in range(6):
         main(t)
         t = int(t / 2)

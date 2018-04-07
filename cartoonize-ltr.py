@@ -76,6 +76,6 @@ def main(THRESHOLD):
 
 if __name__ == '__main__':
     t = 442
-    for i in range(10):
+    for i in range(6):
         main(t)
         t = int(t / 2)
