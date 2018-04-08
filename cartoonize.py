@@ -1,5 +1,6 @@
 import random, math, progressbar
 from PIL import Image, ImageDraw
+from push_to_git import git_add, git_commit, git_push
 
 def random_pixel(image, visited):
     rand = (random.randint(0, image.width-1), random.randint(0, image.height-1))
@@ -74,6 +75,9 @@ def main(THRESHOLD, t_incremental, angle, angle_incremental):
         avg = im.getpixel(initial_pixel)
         draw.point(group, fill=avg)
         im2.save(fname)
+    git_add('.', '.')
+    git_commit('add file', '.')
+    git_push('.')
 
 if __name__ == '__main__':
     dx = math.log(442/13)/16
