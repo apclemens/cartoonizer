@@ -80,6 +80,8 @@ def main(THRESHOLD, t_incremental, angle, angle_incremental):
     git_commit('add file', '.')
     git_push('.')
     time.sleep(10)
+
+if True:
     for ch in 'apclemens':
         subprocess.check_output(['xdotool', 'key', ch])
     subprocess.check_output(['xdotool', 'key', 'Return'])
