@@ -1,4 +1,4 @@
-import random, math, progressbar
+import random, math, progressbar, time, subprocess
 from PIL import Image, ImageDraw
 from push_to_git import git_add, git_commit, git_push
 
@@ -51,6 +51,7 @@ def main(THRESHOLD, t_incremental, angle, angle_incremental):
     pixel_groups = []
     bar = progressbar.ProgressBar(max_value=len(pixels_to_fill))
     i = 0
+    pixels_to_fill = []
 
     while len(pixels_to_fill) > 0:
         pixel_queue = [pixels_to_fill[0]]
@@ -78,6 +79,17 @@ def main(THRESHOLD, t_incremental, angle, angle_incremental):
     git_add('.', '.')
     git_commit('add file', '.')
     git_push('.')
+    time.sleep(1)
+    for ch in 'apclemens':
+        subprocess.check_output(['xdotool', 'key', ch])
+    subprocess.check_output(['xdotool', 'key', 'Return'])
+    time.sleep(1)
+    for ch in 'Apc124578':
+        subprocess.check_output(['xdotool', 'key', ch])
+    subprocess.check_output(['xdotool', 'keydown', 'Shift'])
+    subprocess.check_output(['xdotool', 'key', '1'])
+    subprocess.check_output(['xdotool', 'keyup', 'Shift'])
+    subprocess.check_output(['xdotool', 'key', 'Return'])
 
 if __name__ == '__main__':
     dx = math.log(442/13)/16
