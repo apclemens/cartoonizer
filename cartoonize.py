@@ -36,16 +36,17 @@ def average_color(image, pixel_group):
     b /= len(pixel_group)
     return (int(r), int(g), int(b))
 
-def main(THRESHOLD):
-    fname = 'left-to-right/'+("%06d" % (THRESHOLD,))+'.jpg'
+def main(THRESHOLD, t_incremental, angle, angle_incremental):
+    fname = 'front/'+str(t_incremental)+'-'+str(angle_incremental)+'.jpg'
 
     im = Image.open('pic.jpg')
     im2 = Image.new("RGB", (im.width, im.height), "white")
     draw = ImageDraw.Draw(im2)
     pixels_to_fill = []
-    for i in range(im.width):
-        for j in range(im.height):
+    for j in range(im.height)[::-1]:
+        for i in range(im.width):
             pixels_to_fill.append((i,j))
+    pixels_to_fill.sort(key=lambda p: p[1]*math.cos(angle) + p[0]*math.sin(angle))
     pixel_groups = []
     bar = progressbar.ProgressBar(max_value=len(pixels_to_fill))
     i = 0
@@ -70,12 +71,17 @@ def main(THRESHOLD):
                 i += 1
                 bar.update(i)
 
-        avg = average_color(im, group)
+        avg = im.getpixel(initial_pixel)
         draw.point(group, fill=avg)
         im2.save(fname)
 
 if __name__ == '__main__':
-    t = 442
-    for i in range(10):
-        main(t)
-        t = int(t / 2)
+    dx = math.log(442/13)/16
+    for angle_incremental in range(16):
+        for t_incremental in range(17):
+            t = 13 * math.exp(dx * t_incremental)
+            angle = math.pi * 2 / 16 * angle_incremental
+            main(t, t_incremental+1, angle - math.pi/2, angle_incremental)
+
+
+
